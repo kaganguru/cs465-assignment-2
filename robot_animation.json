@@ -1,0 +1,291 @@
+{
+  "duration": 5,
+  "keyframes": {
+    "Body": [
+      {
+        "time": 0,
+        "translation": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          0,
+          0,
+          0
+        ],
+        "initialRotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.25,
+        "translation": [
+          0,
+          0.1,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          0,
+          0.1,
+          0
+        ],
+        "initialRotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.5,
+        "translation": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          0,
+          0,
+          0
+        ],
+        "initialRotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.75,
+        "translation": [
+          0,
+          0.1,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          0,
+          0.1,
+          0
+        ],
+        "initialRotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "UpperLegFL": [
+      {
+        "time": 0,
+        "translation": [
+          -0.8,
+          -0.2,
+          0.8
+        ],
+        "rotation": [
+          0.5,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          -0.8,
+          -0.2,
+          0.8
+        ],
+        "initialRotation": [
+          0.5,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.5,
+        "translation": [
+          -0.8,
+          -0.2,
+          0.8
+        ],
+        "rotation": [
+          -0.5,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          -0.8,
+          -0.2,
+          0.8
+        ],
+        "initialRotation": [
+          -0.5,
+          0,
+          0
+        ]
+      }
+    ],
+    "UpperLegFR": [
+      {
+        "time": 0,
+        "translation": [
+          0.8,
+          -0.2,
+          0.8
+        ],
+        "rotation": [
+          -0.5,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          0.8,
+          -0.2,
+          0.8
+        ],
+        "initialRotation": [
+          -0.5,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.5,
+        "translation": [
+          0.8,
+          -0.2,
+          0.8
+        ],
+        "rotation": [
+          0.5,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          0.8,
+          -0.2,
+          0.8
+        ],
+        "initialRotation": [
+          0.5,
+          0,
+          0
+        ]
+      }
+    ],
+    "UpperLegBL": [
+      {
+        "time": 0,
+        "translation": [
+          -0.8,
+          -0.2,
+          -0.8
+        ],
+        "rotation": [
+          -0.5,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          -0.8,
+          -0.2,
+          -0.8
+        ],
+        "initialRotation": [
+          -0.5,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.5,
+        "translation": [
+          -0.8,
+          -0.2,
+          -0.8
+        ],
+        "rotation": [
+          0.5,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          -0.8,
+          -0.2,
+          -0.8
+        ],
+        "initialRotation": [
+          0.5,
+          0,
+          0
+        ]
+      }
+    ],
+    "UpperLegBR": [
+      {
+        "time": 0,
+        "translation": [
+          0.8,
+          -0.2,
+          -0.8
+        ],
+        "rotation": [
+          0.5,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          0.8,
+          -0.2,
+          -0.8
+        ],
+        "initialRotation": [
+          0.5,
+          0,
+          0
+        ]
+      },
+      {
+        "time": 0.5,
+        "translation": [
+          0.8,
+          -0.2,
+          -0.8
+        ],
+        "rotation": [
+          -0.5,
+          0,
+          0
+        ],
+        "initialTranslation": [
+          0.8,
+          -0.2,
+          -0.8
+        ],
+        "initialRotation": [
+          -0.5,
+          0,
+          0
+        ]
+      }
+    ]
+  }
+}

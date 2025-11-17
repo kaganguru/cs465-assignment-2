@@ -1,0 +1,21 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl custom3(Clone)
+Kd 1 1 1
+map_Kd Textures/custom3(Clone).png
+
+newmtl woodDark(Clone)
+Kd 1 1 1
+
+newmtl hair(Clone)
+Kd 0.752 0.752 0.752
+map_Kd Textures/hair(Clone).png
+
+newmtl skin(Clone)
+Kd 0.386 0.386 0.386
+map_Kd Textures/skin(Clone).png
+
+newmtl metalOrange(Clone)
+Kd 1 0.702 0
+map_Kd Textures/metalOrange(Clone).png
+

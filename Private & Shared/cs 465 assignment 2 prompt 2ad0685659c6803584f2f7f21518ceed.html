@@ -1,0 +1,743 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>cs 465 assignment 2 prompt</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2ad06856-59c6-8035-84f2-f7f21518ceed" class="page sans"><header><h1 class="page-title">cs 465 assignment 2 prompt</h1><p class="page-description"></p></header><div class="page-body"><p id="2ad06856-59c6-8091-8512-e0e81e2e0c7f" class="">For this assignment, you are going to develop a 3D hierarchical model viewing and animating application using raw WebGL. You will use the matrix stack and the tree traversal approaches (recursive traversal of matrixes for hierarchical modeling) that are used to manipulate the primitives and transformations using the matrix stack. </p><p id="2ae06856-59c6-8016-b3f3-f3fe44d6b1c5" class="">
+</p><h3 id="2ad06856-59c6-803a-a2dd-de23f3d6f334" class="">Rendering</h3><ul id="2ad06856-59c6-80ad-9379-fcace9b40c36" class="bulleted-list"><li style="list-style-type:disc">webgl glsl shaders</li></ul><ul id="2ad06856-59c6-80e9-9a37-eec3ddd25a56" class="bulleted-list"><li style="list-style-type:disc">It should have a basic diffuse and specular reflection calculation. We don’t have normal maps and other pbr attributes. Just map the texture and do a fragment shade with very default diffuse and specular reflection.</li></ul><ul id="2ad06856-59c6-805d-a34e-e32cc1ccb0ed" class="bulleted-list"><li style="list-style-type:disc">Light is directional so it can be a uniform variable passed to the shader as a vector.</li></ul><ul id="2ad06856-59c6-805a-a95b-cfb221159b76" class="bulleted-list"><li style="list-style-type:disc">rotation values in the animaton should rotate the parts around their pivot points.</li></ul><ul id="2ad06856-59c6-80b9-a739-cbe9bc74bd66" class="bulleted-list"><li style="list-style-type:disc">the application should calculate the final transformation matrix and send it to the shader.</li></ul><ul id="2ad06856-59c6-80ca-9e3c-dab9f1fd3909" class="bulleted-list"><li style="list-style-type:disc">the application also calculates the projection matrix for the final render obviously.</li></ul><p id="2ae06856-59c6-802e-ae81-c7dac1da0eee" class="">
+</p><h3 id="2ae06856-59c6-8064-9c4b-cacf4b3b9b69" class="">Hierarchical Modeling</h3><p id="2ae06856-59c6-807e-9a3a-c18221796e0f" class=""><div class="indented"><p id="2ae06856-59c6-80dd-9302-e30bb658292c" class="">I exported these models into the ‘assets’ folder and it outputted an obj file and an mtl file for each part. See the content of these files for double check. And these models have textures, which for all of the body parts, they are stored in the textures folder. Mtl files reference to these textures.</p><p id="2ae06856-59c6-8075-9523-e02a9226aa3d" class=""><strong>Robot hierarchy (scene graph):</strong></p><ul id="2ae06856-59c6-8056-8fb0-ed68478238b9" class="bulleted-list"><li style="list-style-type:disc"><code>Body</code> is the <strong>root</strong>.</li></ul><ul id="2ae06856-59c6-80c1-a80e-dac8dad10883" class="bulleted-list"><li style="list-style-type:disc">Depth 1 children of <code>Body</code>: <code>Head</code>, <code>UpperLegFL</code>, <code>UpperLegFR</code>, <code>UpperLegBL</code>, <code>UpperLegBR</code>.</li></ul><ul id="2ae06856-59c6-806d-9b18-c60794c82959" class="bulleted-list"><li style="list-style-type:disc">Each <code>UpperLeg*</code> has one child: its matching <code>LowerLeg*</code> (depth 2).</li></ul><p id="2ae06856-59c6-8003-bb08-d1b84cbfa1ff" class="">So the tree is:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2ae06856-59c6-80d2-ae42-d778d934bdf3" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Body
+ ├─ Head
+ ├─ UpperLegFL ── LowerLegFL
+ ├─ UpperLegFR ── LowerLegFR
+ ├─ UpperLegBL ── LowerLegBL
+ └─ UpperLegBR ── LowerLegBR
+</code></pre></div></p><ul id="2ae06856-59c6-801b-bb66-ea68defa50bd" class="bulleted-list"><li style="list-style-type:disc">Implement the robot as a tree rooted at <code>Body</code>, draw with a recursive function using push/pop around each node so that each child (head, upper legs, lower legs) inherits the full transform chain from its parent instead of being placed independently in world space.</li></ul><ul id="2ae06856-59c6-80e8-a822-e46f9a21c56e" class="bulleted-list"><li style="list-style-type:disc">1. Use a recursive draw function with a matrix stack. <strong>Core rule:</strong><ul id="2ae06856-59c6-80d0-8d32-d47b84bf92a4" class="bulleted-list"><li style="list-style-type:circle">Each child must inherit <strong>all transforms</strong> from its parent.</li></ul><ul id="2ae06856-59c6-80b0-920a-dc2b29360cf8" class="bulleted-list"><li style="list-style-type:circle">Use a push/pop (or equivalent) around each node. Some pseudo codes for you:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2ae06856-59c6-8014-b782-f049b7d37b6f" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">function drawBody(params):
+    pushMatrix()
+        applyBodyTransform(params.body)      // position + rotation of whole robot
+        drawBodyMesh()
+
+        drawHead(params.head)
+        drawUpperLegFL(params.legFL)
+        drawUpperLegFR(params.legFR)
+        drawUpperLegBL(params.legBL)
+        drawUpperLegBR(params.legBR)
+    popMatrix()
+
+</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2ae06856-59c6-807c-9b78-e3171ac816d6" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">function drawUpperLegFL(legParams):
+    pushMatrix()
+        applyRotation(legParams.upperAngle)
+        drawUpperLegFLMesh()
+        drawLowerLegFL(legParams)
+    popMatrix()
+
+function drawLowerLegFL(legParams):
+    pushMatrix()
+        applyRotation(legParams.lowerAngle)
+        drawLowerLegFLMesh()
+    popMatrix()
+
+</code></pre></li></ul><p id="2ae06856-59c6-8075-a8a6-e5e96c1f5e2a" class="">Repeat the same pattern for the other legs and the head.</p></li></ul><ul id="2ae06856-59c6-8063-9222-e46ded1805dd" class="bulleted-list"><li style="list-style-type:disc">2. Rules the AI MUST follow<ul id="2ae06856-59c6-8004-8ec1-e13e5f5b8fa6" class="bulleted-list"><li style="list-style-type:circle"><strong>Never reset the transform per part.</strong><ul id="2ae06856-59c6-80c6-a9e5-e79749ec73c8" class="bulleted-list"><li style="list-style-type:square">Do <strong>not</strong> place head/legs directly in world space.</li></ul></li></ul><ul id="2ae06856-59c6-80a3-a282-fbeb263162fa" class="bulleted-list"><li style="list-style-type:circle">They must be drawn <em>under</em> the <code>Body</code> transform.</li></ul><ol type="1" id="2ae06856-59c6-807a-9934-f5f45f650201" class="numbered-list" start="1"><li><strong>Always:</strong><ul id="2ae06856-59c6-80ab-a172-f3ab0965677a" class="bulleted-list"><li style="list-style-type:disc"><code>pushMatrix()</code></li></ul><ul id="2ae06856-59c6-802a-a6b8-eca3d406e20e" class="bulleted-list"><li style="list-style-type:disc">apply this node’s rotation/translation</li></ul><ul id="2ae06856-59c6-805e-9dc8-c6b028009f2f" class="bulleted-list"><li style="list-style-type:disc">draw its mesh</li></ul><ul id="2ae06856-59c6-80e5-879e-dfe6d3ae485b" class="bulleted-list"><li style="list-style-type:disc">call children</li></ul><ul id="2ae06856-59c6-80bd-a2c2-d6deca88af1d" class="bulleted-list"><li style="list-style-type:disc"><code>popMatrix()</code></li></ul></li></ol><ol type="1" id="2ae06856-59c6-80c8-9445-e1eb02c8cc5a" class="numbered-list" start="2"><li><strong>All body movement automatically affects everything:</strong><ul id="2ae06856-59c6-8065-9790-f296aa496483" class="bulleted-list"><li style="list-style-type:disc">When <code>Body</code> moves/rotates, <code>Head</code> and all legs move with it.</li></ul><ul id="2ae06856-59c6-80f5-81c2-e932a8d05363" class="bulleted-list"><li style="list-style-type:disc">When an <code>UpperLeg</code> rotates, its <code>LowerLeg</code> follows.</li></ul></li></ol><ol type="1" id="2ae06856-59c6-8091-95ca-c991c636ecca" class="numbered-list" start="3"><li><strong>Per frame:</strong><ul id="2ae06856-59c6-80db-b729-e9739dbd7648" class="bulleted-list"><li style="list-style-type:disc">Rebuild transforms from scratch using the current joint angles (no cumulative updates)</li></ul></li></ol></li></ul><h3 id="2ad06856-59c6-808f-802c-eaf0e3722a9f" class="">Interface</h3><ul id="2ad06856-59c6-80c0-bedd-e0c2536d02e7" class="bulleted-list"><li style="list-style-type:disc">Essentially UI will look like the following image<figure id="2ad06856-59c6-8028-993b-f925947bb3e1" class="image" style="text-align:left"><a href="cs%20465%20assignment%202%20prompt/image.png"><img style="width:480px" src="cs%20465%20assignment%202%20prompt/image.png"/></a></figure></li></ul><ul id="2ad06856-59c6-8070-83a1-e6ce0fcf488f" class="bulleted-list"><li style="list-style-type:disc">at the bottom will be the keyframe editor and on the right will be the key value editor. the remaining is the viewport.</li></ul><ul id="2ad06856-59c6-8014-940f-dbb2d471f1c2" class="bulleted-list"><li style="list-style-type:disc">viewport renders the scene </li></ul><ul id="2ad06856-59c6-80a5-938f-cd930edcc723" class="bulleted-list"><li style="list-style-type:disc">and have a orbit feature when a click and drag happens it orbits around the orbit camera origin (by default it’s the vec3.zero) like a virtual trackball.</li></ul><ul id="2ad06856-59c6-8055-8de8-d579db9cae5d" class="bulleted-list"><li style="list-style-type:disc">have a pan feature that with the space bar clicked the drag click moves the origin of the orbit camera</li></ul><ul id="2ad06856-59c6-80c2-8d2d-d1568fa735c5" class="bulleted-list"><li style="list-style-type:disc">for background use a clear color </li></ul><ul id="2ae06856-59c6-80bd-95e9-deb8660f76d8" class="bulleted-list"><li style="list-style-type:disc">ground plane should be a visible grid, fading from origin to far<br/></li></ul><h3 id="2ad06856-59c6-809a-9b9b-e1d57ac7a820" class="">Key Frame editor</h3><ul id="2ad06856-59c6-807a-b588-e0cd8cc5eb65" class="bulleted-list"><li style="list-style-type:disc">in the keyframe editor there will be 10 rows corresponding the key frames of transformations of each body part : “Head, Body, Front Right Upper Leg, Front Right Upper and so on for other 3 legs…)</li></ul><ul id="2ad06856-59c6-8030-bbd5-e0e076a82fc9" class="bulleted-list"><li style="list-style-type:disc">each keyframe holds a translation (vec3) and a rotation (vec3) value.</li></ul><ul id="2ad06856-59c6-80fc-9440-e939b7c256c7" class="bulleted-list"><li style="list-style-type:disc">from keyframe to other keyframe these values will be linearly interpolated for animation.</li></ul><ul id="2ad06856-59c6-8075-8dec-dd9ca5daff34" class="bulleted-list"><li style="list-style-type:disc">if there are no keyframes, the values for the transformations should be set to default. these default values will be constants I will play with in the code to set up the default positioning/rotation of body parts.</li></ul><ul id="2ad06856-59c6-80e2-8d99-c6743a44ea41" class="bulleted-list"><li style="list-style-type:disc">keyframes will have percentage value so their position is determined by at what percent of the animation they are. so if the animation duration is 5 seconds and a keyframe is at the 50% position it’s gonna be at second 2.5. You can see the ruler at the top of the keyframe editor starting from 0 and ending at 100.</li></ul><ul id="2ad06856-59c6-80cc-8341-c67d0aff6272" class="bulleted-list"><li style="list-style-type:disc">at the top of the keyframe editor add a number input for animation duration. default is 5 seconds and changes to this should appear immediately. so if the current frame is at 40% and I set this value from 5 to 10 it should reach to end at 6 seconds (to complete the remaining 60%)</li></ul><ul id="2ad06856-59c6-80d4-9166-cd8b930bc32c" class="bulleted-list"><li style="list-style-type:disc">current frame will increase (100/duration) percent in a second.</li></ul><ul id="2ad06856-59c6-80f9-866f-c3066133cedd" class="bulleted-list"><li style="list-style-type:disc">animation will loop, and interpolation will be done as the last frame is the first frame so there’s no cuts, while looping.</li></ul><ul id="2ad06856-59c6-80e7-aef2-c23ee12dd01e" class="bulleted-list"><li style="list-style-type:disc">at the top of the keyframe editor we’ll have this 3 buttons<ul id="2ad06856-59c6-804f-9c67-e7fa0dc7d89a" class="bulleted-list"><li style="list-style-type:circle">Play button resumes the animation (current frame can continue to increase)</li></ul><ul id="2ad06856-59c6-8061-98b4-e5553b08d217" class="bulleted-list"><li style="list-style-type:circle">Pause button pauses the animation (current frame should stop)</li></ul><ul id="2ad06856-59c6-8028-b18e-f542946d205d" class="bulleted-list"><li style="list-style-type:circle">Reset button resets the current frame value to 0 percent, which is resetting.</li></ul></li></ul><ul id="2ad06856-59c6-8026-a1e9-fc99ba3babc2" class="bulleted-list"><li style="list-style-type:disc">we should be able to travel in the animation clicking or click dragging on the time ruler<br/></li></ul><h3 id="2ad06856-59c6-80ce-a5db-feb5acc0c964" class="">Adding/Editing a key frame</h3><ul id="2ad06856-59c6-80f1-9897-d690659c4039" class="bulleted-list"><li style="list-style-type:disc">you cannot add edit delete keyframes when the animation is playing. so, disable all the actions when the animation is in the playing state.</li></ul><ul id="2ad06856-59c6-8044-b2da-e36c11330b44" class="bulleted-list"><li style="list-style-type:disc">when, a click is clicked at a row at a certain frame position, it will add a new keyframe at the click position for that row/part. And it’s at clicked state, to start editing it right away</li></ul><ul id="2ad06856-59c6-80b1-8072-f40f8fa8e1a7" class="bulleted-list"><li style="list-style-type:disc">when the new keyframe is created at that position, initial transform values of the keyframe will be whatever’s supposed to be at that frame position. this way it will not break the continuity of the animation when a new keyframe is added.<ul id="2ad06856-59c6-806e-9424-d2fb8cf72316" class="bulleted-list"><li style="list-style-type:circle">so when there’s no keyframe we told that it will play the default position and wherever we click it will create a keyframe with this values.</li></ul><ul id="2ad06856-59c6-8046-ba64-c82a87103664" class="bulleted-list"><li style="list-style-type:circle">and when there’s some keyframe and when we add the new one, initial values will be the interpolated value (whatever’s supposed to be at that frame position) So it’s like peeking the values of transform of animation at that position.</li></ul></li></ul><ul id="2ad06856-59c6-8035-8395-d4a9aef77d62" class="bulleted-list"><li style="list-style-type:disc">when a key frame is clicked state the value editor will show the inputs for the transformation values. these inputs should be a slider and should have a reset value that will reset them to to their initial value. you can edit these values here:<ul id="2ad06856-59c6-8004-b3fd-d2beeaa9d9a7" class="bulleted-list"><li style="list-style-type:circle">rotation x, y, z </li></ul><ul id="2ad06856-59c6-8092-9684-eaea1c5d4697" class="bulleted-list"><li style="list-style-type:circle">translation x, y, z</li></ul></li></ul><ul id="2ad06856-59c6-805c-ad3e-e2e8a3f0c7a2" class="bulleted-list"><li style="list-style-type:disc">you can also press delete key while a keyframe is in clicked state for editing, this will delete the keyframe.</li></ul><ul id="2ad06856-59c6-80d7-a389-de40e63bf0c6" class="bulleted-list"><li style="list-style-type:disc">when a keyframe is clicked to edit, or when a new keyframe is added at a new position current_frame teleports to the frame position of this keyframe. this the current render will be done with transform values corresponding to this exact frame. so if a keyframe is in clicked state we can safely tell the current frame is at the frame position of that keyframe.</li></ul><ul id="2ad06856-59c6-807f-9e60-f0f43d7d20fa" class="bulleted-list"><li style="list-style-type:disc">when a keyframe is in clicked state, edit the tint value of the corresponding part to red to show which part you’re editing. this means that the object is in picked state. in picked state in addition to the value editor, there will appear a gizmo for transforming at the part’s origin  point. (talked in the viewport editing section)</li></ul><ul id="2ae06856-59c6-8030-87c4-f26b3000934e" class="bulleted-list"><li style="list-style-type:disc"></li></ul><p id="2ad06856-59c6-801c-8a28-e54914a2eeed" class="">
+</p><h3 id="2ad06856-59c6-80e4-8b79-e7e7b5b1f69a" class="">Viewport editing</h3><ul id="2ad06856-59c6-8033-b209-db0149cd7de9" class="bulleted-list"><li style="list-style-type:disc">when animation is not playing, user can pick by clicking on the body part. if already a keyframe is selected, you cannot re-click to the body part that keyframe is associated to. this is important because </li></ul><ul id="2ad06856-59c6-80a3-851a-fa8b082e870d" class="bulleted-list"><li style="list-style-type:disc">this tutorial is provided for picking tutorial: <a href="https://webglfundamentals.org/webgl/lessons/webgl-picking.html">https://webglfundamentals.org/webgl/lessons/webgl-picking.html</a></li></ul><ul id="2ad06856-59c6-800d-b470-d6f48df46941" class="bulleted-list"><li style="list-style-type:disc">when a part is picked and transformed through the control gizmos (a gizmo including 3 arrows for translation and 3 rings for rotation ) it creates a new keyframe with a frame position value of current_frame</li></ul><ul id="2ad06856-59c6-80e5-80f6-eda14d684e38" class="bulleted-list"><li style="list-style-type:disc">control gizmo helps editing the relative translation and rotation value by clicking on rings or arrows and dragging.</li></ul><ul id="2ad06856-59c6-800f-8e39-e6a916f18301" class="bulleted-list"><li style="list-style-type:disc">you can also edit this transform values in the value editor vice versa.</li></ul><p id="2ad06856-59c6-8009-8039-e450bcfc1d37" class="">
+</p><h3 id="2ad06856-59c6-8040-bcf8-e3cb1bbf7b46" class="">Saving and loading</h3><ul id="2ad06856-59c6-8033-86b5-c19795c06215" class="bulleted-list"><li style="list-style-type:disc">at the top of the keyfram edtior we’ll add 2 buttons save and load:<ul id="2ad06856-59c6-80f0-9dbb-c8813147f101" class="bulleted-list"><li style="list-style-type:circle">save saves the keyframes and their values using a json file </li></ul><ul id="2ad06856-59c6-809d-a279-e5925d92d1ff" class="bulleted-list"><li style="list-style-type:circle">load loads the keyframes from the json file.</li></ul></li></ul><p id="2ad06856-59c6-8018-9e1e-fe25924d6188" class="">
+</p><p id="2ad06856-59c6-80a0-b5a9-d4c75917b8f3" class="">IMPORTANT:</p><ul id="2ad06856-59c6-8089-99f1-edf661c6ca9f" class="bulleted-list"><li style="list-style-type:disc"><strong>DO NOT use the third-party wrappers like three.js. Use WebGL from scratch.</strong></li></ul><ul id="2ad06856-59c6-804e-a143-c0ddd77544f6" class="bulleted-list"><li style="list-style-type:disc">You could use simple HTML UI elements or JavaScript (jQuery, AngularJS, jQWidgets, ... etc.) UI widget libraries.</li></ul><p id="2ad06856-59c6-8070-a7a1-fd90ce1670d3" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

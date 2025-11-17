@@ -1,0 +1,10 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl custom2(Clone)
+Kd 1 1 1
+map_Kd Textures/custom2(Clone).png
+
+newmtl custom3(Clone)
+Kd 1 1 1
+map_Kd Textures/custom3(Clone).png
+

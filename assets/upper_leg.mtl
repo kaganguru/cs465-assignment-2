@@ -1,0 +1,10 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl skinDark(Clone)
+Kd 0.393 0.354 0.354
+map_Kd Textures/skinDark(Clone).png
+
+newmtl custom2(Clone)
+Kd 1 1 1
+map_Kd Textures/custom2(Clone).png
+

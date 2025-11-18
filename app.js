@@ -59,18 +59,18 @@ const PARTS = [
     'LowerLegBR'
 ];
 
-// Default transforms for each part (will be adjusted after loading models)
+// Default transforms for each part
 const DEFAULT_TRANSFORMS = {
-    'Body': { translation: [0, 0, 0], rotation: [0, 0, 0] },
-    'Head': { translation: [0, 0.5, 1.2], rotation: [0, 0, 0] },
-    'UpperLegFL': { translation: [-0.8, -1, 0.8], rotation: [0, 0, 0] },
-    'LowerLegFL': { translation: [0, -1.2, 0], rotation: [0, 0, 0] },
-    'UpperLegFR': { translation: [0.8, -0.2, 0.8], rotation: [0, 0, 0] },
-    'LowerLegFR': { translation: [0, -1.2, 0], rotation: [0, 0, 0] },
-    'UpperLegBL': { translation: [-0.8, -0.2, -0.8], rotation: [0, 0, 0] },
-    'LowerLegBL': { translation: [0, -1.2, 0], rotation: [0, 0, 0] },
-    'UpperLegBR': { translation: [0.8, -0.2, -0.8], rotation: [0, 0, 0] },
-    'LowerLegBR': { translation: [0, -1.2, 0], rotation: [0, 0, 0] }
+    'Body': { translation: [0, 1.0, 0], rotation: [0, 0, 0] },
+    'Head': { translation: [0, 0.8, 0.6], rotation: [0, 0, 0] },
+    'UpperLegFL': { translation: [-0.5, -1.4, 0.5], rotation: [0, 0, 0] },
+    'LowerLegFL': { translation: [0, -0.05, 0], rotation: [0, 0, 0] },
+    'UpperLegFR': { translation: [0.5, -1.4, 0.5], rotation: [0, 0, 0] },
+    'LowerLegFR': { translation: [0, -0.05, 0], rotation: [0, 0, 0] },
+    'UpperLegBL': { translation: [-0.5, -1.4, -0.5], rotation: [0, 0, 0] },
+    'LowerLegBL': { translation: [0, -0.05, 0], rotation: [0, 0, 0] },
+    'UpperLegBR': { translation: [0.5, -1.4, -0.5], rotation: [0, 0, 0] },
+    'LowerLegBR': { translation: [0, -0.05, 0], rotation: [0, 0, 0] }
 };
 
 // ============================================================================
@@ -1214,21 +1214,33 @@ function deleteSelectedKeyframe() {
 }
 
 function updateTimelineDisplay() {
+    console.log('🔄 Updating timeline display...');
+    console.log('Current keyframes in state:', state.animation.keyframes);
+    
+    let totalKeyframesDisplayed = 0;
+    
     PARTS.forEach(partName => {
         const content = document.querySelector(`.track-content[data-part="${partName}"]`);
-        if (!content) return;
+        if (!content) {
+            console.warn(`⚠️ No track content found for: ${partName}`);
+            return;
+        }
         
         // Clear existing keyframes
         content.querySelectorAll('.keyframe').forEach(el => el.remove());
         
         // Add keyframes
         const keyframes = state.animation.keyframes[partName] || [];
+        console.log(`📍 ${partName}: ${keyframes.length} keyframes`);
+        
         keyframes.forEach((kf, index) => {
             const keyframeEl = document.createElement('div');
             keyframeEl.className = 'keyframe';
             keyframeEl.style.left = (kf.time * 100) + '%';
             keyframeEl.dataset.part = partName;
             keyframeEl.dataset.index = index;
+            
+            console.log(`  - Keyframe ${index} at time ${kf.time} (${(kf.time * 100).toFixed(1)}%)`);
             
             if (state.selectedKeyframe && 
                 state.selectedKeyframe.partName === partName && 
@@ -1244,8 +1256,11 @@ function updateTimelineDisplay() {
             });
             
             content.appendChild(keyframeEl);
+            totalKeyframesDisplayed++;
         });
     });
+    
+    console.log(`✅ Timeline updated. Total keyframes displayed: ${totalKeyframesDisplayed}`);
 }
 
 function updateControlsPanel() {
@@ -1390,7 +1405,10 @@ function initControls() {
     document.getElementById('save-btn').addEventListener('click', saveKeyframes);
     
     // Load button
-    document.getElementById('load-btn').addEventListener('click', loadKeyframes);
+    document.getElementById('load-btn').addEventListener('click', () => {
+        console.log('Load button clicked');
+        loadKeyframes();
+    });
     
     // Keyboard controls
     document.addEventListener('keydown', (e) => {
@@ -2006,33 +2024,111 @@ function saveKeyframes() {
 }
 
 function loadKeyframes() {
+    console.log('Opening file picker...');
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = 'application/json';
+    input.accept = '.json';
+    input.style.display = 'none';
     
-    input.onchange = (e) => {
+    // Add to DOM temporarily
+    document.body.appendChild(input);
+    
+    input.addEventListener('change', (e) => {
+        console.log('File selected');
         const file = e.target.files[0];
-        if (!file) return;
         
+        // Remove input from DOM
+        document.body.removeChild(input);
+        
+        if (!file) {
+            console.log('No file selected');
+            return;
+        }
+        
+        console.log('Reading file:', file.name);
         const reader = new FileReader();
+        
+        reader.onerror = (error) => {
+            console.error('FileReader error:', error);
+            alert('Error reading file: ' + error);
+        };
+        
         reader.onload = (event) => {
             try {
+                console.log('File loaded, parsing JSON...');
+                console.log('Raw content length:', event.target.result.length);
                 const data = JSON.parse(event.target.result);
-                state.animation.duration = data.duration || 5.0;
-                state.animation.keyframes = data.keyframes || {};
-                
-                document.getElementById('duration-input').value = state.animation.duration;
-                
-                updateTimelineDisplay();
-                render();
+                console.log('JSON parsed successfully:', data);
+                applyAnimationData(data);
+                console.log('Animation applied successfully!');
             } catch (err) {
                 alert('Error loading file: ' + err.message);
+                console.error('Error loading animation:', err);
+                console.error('File content:', event.target.result);
             }
         };
         reader.readAsText(file);
-    };
+    });
     
-    input.click();
+    // Trigger click
+    setTimeout(() => {
+        input.click();
+    }, 100);
+}
+
+// Load animation from URL
+async function loadAnimationFromFile(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to load ${url}: ${response.statusText}`);
+        }
+        const data = await response.json();
+        applyAnimationData(data);
+        console.log(`Loaded animation from ${url}`);
+    } catch (err) {
+        console.error('Error loading animation file:', err);
+        throw err;
+    }
+}
+
+// Apply animation data to the state
+function applyAnimationData(data) {
+    console.log('Applying animation data:', data);
+    
+    if (!data || typeof data !== 'object') {
+        throw new Error('Invalid animation data');
+    }
+    
+    // Reset animation state
+    state.animation.isPlaying = false;
+    state.animation.duration = data.duration || 5.0;
+    state.animation.keyframes = data.keyframes || {};
+    state.animation.currentTime = 0;
+    state.selectedKeyframe = null;
+    state.gizmo.visible = false;
+    
+    console.log('Duration set to:', state.animation.duration);
+    console.log('Keyframes loaded:', Object.keys(state.animation.keyframes));
+    console.log('Total parts with keyframes:', Object.keys(state.animation.keyframes).length);
+    
+    // Update UI
+    const durationInput = document.getElementById('duration-input');
+    if (durationInput) {
+        durationInput.value = state.animation.duration;
+    }
+    
+    updateTimelineDisplay();
+    updatePlayheadPosition();
+    updateControlsPanel();
+    render();
+    
+    console.log('✅ Animation loaded successfully!');
+    
+    // Visual confirmation
+    setTimeout(() => {
+        alert(`Animation loaded!\nDuration: ${state.animation.duration}s\nParts: ${Object.keys(state.animation.keyframes).join(', ')}`);
+    }, 100);
 }
 
 // ============================================================================
@@ -2077,7 +2173,7 @@ async function init() {
     initCameraControls();
     
     console.log('Starting animation loop...');
-    console.log('Tip: Load walking_animation.json to see a sample animation!');
+    console.log('Tip: Use the Load button to load animation files, or create your own animation!');
     requestAnimationFrame(animate);
 }
 

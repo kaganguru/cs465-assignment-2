@@ -1276,9 +1276,16 @@ function updateControlsPanel() {
     if (!keyframes || keyframeIndex < 0 || keyframeIndex >= keyframes.length) return;
     
     const keyframe = keyframes[keyframeIndex];
+    const gizmoModeIcon = state.gizmo.mode === 'translate' ? '↔️' : '🔄';
+    const gizmoModeName = state.gizmo.mode === 'translate' ? 'Translate' : 'Rotate';
     
     controlsContent.innerHTML = `
         <h3>Controls: ${formatPartName(partName)}</h3>
+        <div style="background: #333; padding: 8px; border-radius: 4px; margin-bottom: 15px; text-align: center;">
+            <strong style="color: #ff9800;">Gizmo Mode: ${gizmoModeIcon} ${gizmoModeName}</strong>
+            <br>
+            <small style="color: #aaa;">Press G to toggle • T for translate • R for rotate</small>
+        </div>
         
         <div class="control-group">
             <div class="control-label">Translation</div>
@@ -1417,6 +1424,33 @@ function initControls() {
             e.preventDefault();
             deleteSelectedKeyframe();
         }
+        
+        // Toggle gizmo mode with G key
+        if (e.key === 'g' || e.key === 'G') {
+            if (state.gizmo.visible) {
+                state.gizmo.mode = state.gizmo.mode === 'translate' ? 'rotate' : 'translate';
+                console.log('Gizmo mode:', state.gizmo.mode);
+                render();
+            }
+        }
+        
+        // R for rotate mode
+        if (e.key === 'r' || e.key === 'R') {
+            if (state.gizmo.visible) {
+                state.gizmo.mode = 'rotate';
+                console.log('Gizmo mode: rotate');
+                render();
+            }
+        }
+        
+        // T for translate mode
+        if (e.key === 't' || e.key === 'T') {
+            if (state.gizmo.visible) {
+                state.gizmo.mode = 'translate';
+                console.log('Gizmo mode: translate');
+                render();
+            }
+        }
     });
 }
 
@@ -1427,6 +1461,17 @@ function initControls() {
 function initCameraControls() {
     state.canvas.addEventListener('mousedown', (e) => {
         if (e.button === 0) {
+            // Check if clicking on gizmo first
+            if (state.gizmo.visible) {
+                handleGizmoPicking(e);
+                if (state.gizmo.isDragging) {
+                    state.camera.hasMoved = false;
+                    e.preventDefault();
+                    return;
+                }
+            }
+            
+            // Otherwise handle camera controls
             if (e.shiftKey || e.ctrlKey || state.camera.isPanning) {
                 state.camera.isPanning = true;
             } else {
@@ -1453,7 +1498,7 @@ function initCameraControls() {
     });
     
     state.canvas.addEventListener('mousemove', (e) => {
-        if (state.gizmo.isDragging) {
+        if (state.gizmo.isDragging && state.gizmo.selectedAxis) {
             // Handle gizmo dragging
             const deltaX = e.clientX - state.gizmo.dragStart.x;
             const deltaY = e.clientY - state.gizmo.dragStart.y;
@@ -1963,19 +2008,65 @@ function drawGizmoRing(baseMatrix, axis, color, radius) {
 }
 
 function handleGizmoPicking(event) {
-    // For now, we'll use a simpler ray-based approach
-    // Check distance to each axis
+    if (!state.gizmo.visible) return;
+    
     const rect = state.canvas.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
     
-    // Convert to NDC
-    const x = (mouseX / rect.width) * 2 - 1;
-    const y = -(mouseY / rect.height) * 2 + 1;
+    // Project gizmo position to screen space
+    const gl = state.gl;
+    const cameraPos = getCameraPosition();
+    const viewMatrix = mat4.create();
+    mat4.lookAt(viewMatrix, cameraPos, state.camera.target, [0, 1, 0]);
     
-    // For simplicity, select axis based on screen position relative to gizmo
-    // This is a simplified version - a full implementation would do ray casting
-    console.log('Gizmo clicked at:', x, y);
+    const projectionMatrix = mat4.create();
+    const aspect = state.canvas.width / state.canvas.height;
+    mat4.perspective(projectionMatrix, Math.PI / 4, aspect, 0.1, 1000.0);
+    
+    // Get gizmo center in screen space
+    const gizmoWorldPos = [...state.gizmo.position, 1];
+    const viewPos = multiplyMatrixVector(viewMatrix, gizmoWorldPos);
+    const clipPos = multiplyMatrixVector(projectionMatrix, viewPos);
+    
+    if (clipPos[3] === 0) return;
+    
+    const ndcX = clipPos[0] / clipPos[3];
+    const ndcY = clipPos[1] / clipPos[3];
+    
+    const screenX = (ndcX + 1) * 0.5 * state.canvas.width;
+    const screenY = (1 - ndcY) * 0.5 * state.canvas.height;
+    
+    // Check distance to gizmo center
+    const dx = mouseX - screenX;
+    const dy = mouseY - screenY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    // Determine which axis based on mouse position relative to gizmo center
+    const threshold = 50;
+    if (distance < threshold) {
+        const angle = Math.atan2(dy, dx);
+        
+        // Determine axis based on angle
+        if (Math.abs(dx) > Math.abs(dy)) {
+            state.gizmo.selectedAxis = dx > 0 ? 'x' : 'x';
+        } else {
+            state.gizmo.selectedAxis = dy > 0 ? 'y' : 'y';
+        }
+        
+        state.gizmo.isDragging = true;
+        state.gizmo.dragStart = { x: event.clientX, y: event.clientY };
+        console.log('Gizmo axis selected:', state.gizmo.selectedAxis);
+    }
+}
+
+function multiplyMatrixVector(mat, vec) {
+    return [
+        mat[0] * vec[0] + mat[4] * vec[1] + mat[8] * vec[2] + mat[12] * vec[3],
+        mat[1] * vec[0] + mat[5] * vec[1] + mat[9] * vec[2] + mat[13] * vec[3],
+        mat[2] * vec[0] + mat[6] * vec[1] + mat[10] * vec[2] + mat[14] * vec[3],
+        mat[3] * vec[0] + mat[7] * vec[1] + mat[11] * vec[2] + mat[15] * vec[3]
+    ];
 }
 
 function handleGizmoDrag(deltaX, deltaY) {
@@ -1986,14 +2077,25 @@ function handleGizmoDrag(deltaX, deltaY) {
     if (!keyframes || keyframeIndex < 0 || keyframeIndex >= keyframes.length) return;
     
     const keyframe = keyframes[keyframeIndex];
-    const sensitivity = 0.01;
     
     if (state.gizmo.mode === 'translate') {
+        const sensitivity = 0.01;
         const axisIndex = { x: 0, y: 1, z: 2 }[state.gizmo.selectedAxis];
-        keyframe.translation[axisIndex] += deltaX * sensitivity;
+        
+        if (state.gizmo.selectedAxis === 'x') {
+            keyframe.translation[axisIndex] += deltaX * sensitivity;
+        } else if (state.gizmo.selectedAxis === 'y') {
+            keyframe.translation[axisIndex] -= deltaY * sensitivity; // Invert Y
+        } else if (state.gizmo.selectedAxis === 'z') {
+            keyframe.translation[axisIndex] += deltaX * sensitivity;
+        }
     } else if (state.gizmo.mode === 'rotate') {
+        const sensitivity = 0.02;
         const axisIndex = { x: 0, y: 1, z: 2 }[state.gizmo.selectedAxis];
-        keyframe.rotation[axisIndex] += deltaX * sensitivity;
+        
+        // Use combined mouse movement for rotation
+        const movement = Math.sqrt(deltaX * deltaX + deltaY * deltaY) * Math.sign(deltaX + deltaY);
+        keyframe.rotation[axisIndex] += movement * sensitivity;
     }
     
     updateControlsPanel();
